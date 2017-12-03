@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Threading.Tasks;
 
 namespace MovingBoxs
 {
@@ -17,6 +18,11 @@ namespace MovingBoxs
             x += 1;
             y += 1;
             Clients.All.MoveIt(x, y);
+        }
+        public override Task OnDisconnected(bool stopCalled)
+        {
+            x -= 100;
+            return base.OnDisconnected(stopCalled);
         }
     }
 }
