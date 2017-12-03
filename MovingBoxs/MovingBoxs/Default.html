@@ -5,16 +5,33 @@
     <title></title>
 </head>
 <body>
+    <div id="ekranX"></div>
+    <div id="ekranY"></div>
+    <div id="squere"></div>
+    <area shape="rect" coords="0,0,82,126" href="sun.htm" alt="Sun">
     <script src="Scripts/jquery-1.6.4.js"></script>
     <script src="Scripts/jquery.signalR-2.2.2.js"></script>
-    <script>
-        (function () {
-            var hubConnection = $.MoveBoxHub;
-            hubConnection.MoveIt = function (x, y) {
-
-            }
-
-        })();
+    <script type="text/javascript">
+        $(function () {
+            var connection = $.hubConnection();
+            var hub = connection.createHubProxy("moveBoxHub");
+            hub.on("MoveIt", function (x, y) {
+                $('#ekranY').html("<b>" + y + "</b>!");
+                $('#ekranX').html("<b>" + x + "</b>!");
+            });
+            connection.start(function () {
+                hub.invoke('Move');
+            });
+        });
     </script>
+    <style>
+        #squere {
+            width: 100px;
+            height: 100px;
+            border: 1px solid #000;
+            background-color:blue;
+        }
+
+    </style>
 </body>
 </html>
